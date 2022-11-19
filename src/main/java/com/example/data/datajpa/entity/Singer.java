@@ -3,7 +3,6 @@ package com.example.data.datajpa.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jdk.jfr.Name;
 
 import javax.persistence.*;
 import java.io.Serializable;

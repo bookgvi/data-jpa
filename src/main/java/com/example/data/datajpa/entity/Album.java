@@ -1,6 +1,7 @@
 package com.example.data.datajpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "album")
 public class Album implements Serializable {

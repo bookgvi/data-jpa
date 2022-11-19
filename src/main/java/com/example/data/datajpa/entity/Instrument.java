@@ -18,7 +18,7 @@ public class Instrument implements Serializable {
 
     private String title;
 
-    public long getInstrumentId() {
+    public long getId() {
         return id;
     }
 
