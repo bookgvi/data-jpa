@@ -33,6 +33,11 @@ public class SingerController {
         return ResponseEntity.ok().body(singerService.findById(id));
     }
 
+    @GetMapping("filter")
+    public ResponseEntity<Iterable<?>> filter(@RequestBody Singer singer) {
+        return ResponseEntity.accepted().body(singerService.findWithCriteria(singer.getFirstName(), singer.getLastName()));
+    }
+
     @PutMapping
     public ResponseEntity<?> addOrUpdate(@RequestBody Singer singer) {
         return ResponseEntity.ok().body(singerService.addOrUpdate(singer));

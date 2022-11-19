@@ -13,4 +13,5 @@ public interface SingerRepository {
     Optional<Singer> findById(long id);
     Iterable<Singer> findAllWitAlbum();
     Singer addOrUpdate(Singer singer);
+    Iterable<Singer> findWithCriteria(String firstName, String lastName);
 }

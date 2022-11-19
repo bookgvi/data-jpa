@@ -2,6 +2,7 @@ package com.example.data.datajpa.service;
 
 import com.example.data.datajpa.entity.Album;
 import com.example.data.datajpa.entity.Singer;
+import com.example.data.datajpa.entity.Singer_;
 import com.example.data.datajpa.repository.SingerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -55,5 +57,25 @@ public class SingerServiceImpl implements SingerRepository {
         logger.info("New Singer has been created");
         entityManager.persist(singer);
         return singer;
+    }
+
+    @Override
+    public Iterable<Singer> findWithCriteria(String firstName, String lastName) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Singer> criteriaQuery = cb.createQuery(Singer.class);
+        Root<Singer> singerRoot = criteriaQuery.from(Singer.class);
+        singerRoot.fetch(Singer_.albums, JoinType.LEFT);
+        singerRoot.fetch(Singer_.instruments, JoinType.LEFT);
+        Predicate andCriteria = cb.conjunction();
+        if (firstName != null) {
+            Predicate p = cb.equal(singerRoot.get(Singer_.firstName), firstName);
+            andCriteria = cb.and(andCriteria, p);
+        }
+        if (lastName != null) {
+            Predicate p = cb.equal((singerRoot.get(Singer_.lastName)), lastName);
+            andCriteria = cb.and(andCriteria, p);
+        }
+        criteriaQuery.select(singerRoot).distinct(true).where(andCriteria);
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }
