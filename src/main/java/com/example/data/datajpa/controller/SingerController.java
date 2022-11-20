@@ -1,7 +1,9 @@
 package com.example.data.datajpa.controller;
 
+import com.example.data.datajpa.annotation.Logging;
 import com.example.data.datajpa.entity.Singer;
 import com.example.data.datajpa.service.SingerServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,11 @@ import java.util.List;
 @ResponseBody
 @RequestMapping("/singer")
 public class SingerController {
-    private final SingerServiceImpl singerService;
-
-    public SingerController(SingerServiceImpl singerService) {
-        this.singerService = singerService;
-    }
+    @Autowired
+    private SingerServiceImpl singerService;
 
     @GetMapping
+    @Logging
     public ResponseEntity<Iterable<?>> getAll() {
         Iterable<?> singers = singerService.findAll();
         return ResponseEntity.ok().body(singers);
@@ -32,6 +32,7 @@ public class SingerController {
     }
 
     @GetMapping("/{id}")
+    @Logging
     public ResponseEntity<?> getById(@PathVariable long id) {
         return ResponseEntity.ok().body(singerService.findById(id));
     }
