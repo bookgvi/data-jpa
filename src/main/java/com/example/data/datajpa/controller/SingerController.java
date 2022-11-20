@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Tuple;
+import java.util.List;
+
 @Controller
 @ResponseBody
 @RequestMapping("/singer")
@@ -33,9 +36,10 @@ public class SingerController {
         return ResponseEntity.ok().body(singerService.findById(id));
     }
 
-    @GetMapping("filter")
+    @GetMapping("/filter")
     public ResponseEntity<Iterable<?>> filter(@RequestBody Singer singer) {
-        return ResponseEntity.accepted().body(singerService.findWithCriteria(singer.getFirstName(), singer.getLastName()));
+        Iterable<?> body = singerService.findWithCriteria(singer.getFirstName(), singer.getLastName());
+        return ResponseEntity.accepted().body(body);
     }
 
     @PutMapping
