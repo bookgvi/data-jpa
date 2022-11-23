@@ -43,11 +43,11 @@ public class LoggingAnnotationBeanPostProcessor implements BeanPostProcessor {
                     Logging loggingAnnotation = methodOptional.get().getAnnotation(Logging.class);
                     if (loggingAnnotation != null) {
                         if (loggingAnnotation.isRequest()) {
-                            logger.info("{}#{}: {}", annotatedClass.getSimpleName(), method.getName(), Arrays.asList(objects));
+                            logger.error("{}#{}: {}", annotatedClass.getSimpleName(), method.getName(), Arrays.asList(objects));
                         }
                         Object invoke = methodProxy.invoke(bean, objects);
                         if (loggingAnnotation.isResponse()) {
-                            logger.info("{}#{}: {}", annotatedClass.getSimpleName(), method.getName(), invoke != null ? String.valueOf(invoke) : "void");
+                            logger.error("{}#{}: {}", annotatedClass.getSimpleName(), method.getName(), invoke != null ? String.valueOf(invoke) : "void");
                         }
                         return invoke;
                     }

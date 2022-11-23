@@ -3,6 +3,7 @@ package com.example.data.datajpa.controller;
 import com.example.data.datajpa.annotation.Logging;
 import com.example.data.datajpa.entity.Singer;
 import com.example.data.datajpa.service.SingerServiceImpl;
+import com.example.data.datajpa.service.TestClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,13 @@ import java.util.List;
 public class SingerController {
     @Autowired
     private SingerServiceImpl singerService;
+    @Autowired
+    TestClass testClass;
 
     @GetMapping
     @Logging
     public ResponseEntity<Iterable<?>> getAll() {
+        testClass.method1();
         Iterable<?> singers = singerService.findAll();
         return ResponseEntity.ok().body(singers);
     }
